@@ -1,33 +1,41 @@
-# Graphix manual test checklist
+# Graphix test checklist
 
-Run these checks in a current desktop browser and on a narrow mobile viewport before merging.
+Use this checklist when reviewing a change or preparing a release. These are test cases to run, not claims that every case has already passed.
 
-## Core flow
-- [ ] Open `index.html`; the demo chart, three summary metrics, and data preview render.
-- [ ] Switch between Bar, Line, and Scatter; the chart changes and the selected control exposes `aria-pressed="true"`.
-- [ ] Change X/Y fields, title, and sort order; chart labels and values update.
-- [ ] Search for a value in the dataset; the table filters and the row count updates.
-- [ ] Load sample dataset; demo rows and default chart return.
+## 1. Open and explore
 
-## Import and error handling
-- [ ] Import a CSV with headers, quoted commas, escaped quotes, and CRLF line endings.
+- [ ] Open `index.html` in a current desktop browser.
+- [ ] Confirm the demo chart, summary metrics, chart controls, and table preview appear.
+- [ ] Switch between Bar, Line, and Scatter; confirm the selected view changes.
+- [ ] Change the category field, value field, chart title, and sort order; confirm the chart updates.
+- [ ] Search the table and confirm the visible rows and count change.
+- [ ] Reload the demo dataset and confirm the default view returns.
+
+## 2. Import files
+
+- [ ] Import a CSV with a header row.
+- [ ] Test quoted commas, escaped quotes, and CRLF line endings.
 - [ ] Import a JSON array of objects.
-- [ ] Cancel file selection; current dataset remains unchanged.
-- [ ] Test malformed JSON, unclosed quoted CSV, unsupported extension, empty file, and a file over the documented size cap; show an error without losing the current dataset.
-- [ ] Test rows with blank cells and mixed numeric/text values; chart should skip non-numeric values rather than crash.
+- [ ] Cancel the file picker and confirm the current dataset stays loaded.
+- [ ] Test malformed JSON, an unclosed CSV quote, an unsupported extension, and an empty file.
+- [ ] Test a file larger than 15 MB and a dataset larger than 100,000 rows.
+- [ ] Include blank cells and mixed numeric/text values; confirm the chart handles them without crashing.
 
-## Exports
-- [ ] Export CSV and reopen it in a spreadsheet; headers, commas, quotes, and newlines remain correctly escaped.
-- [ ] Export SVG and open it in a browser.
-- [ ] Export PNG and confirm the downloaded image is not blank.
+## 3. Export files
 
-## Accessibility and responsive layout
-- [ ] Navigate all controls using Tab and Enter/Space; focus is visible.
-- [ ] Check labels for file input, search, and select fields.
-- [ ] At 320 px wide and 200% zoom, content remains usable without controls overlapping.
-- [ ] Enable reduced motion in the operating system and verify the interface does not rely on animation.
+- [ ] Export the dataset as CSV, then reopen it in a spreadsheet and check headers, commas, quotes, and newlines.
+- [ ] Export the chart as SVG and open it in a browser.
+- [ ] Export the chart as PNG and confirm the image contains the chart.
 
-## Known boundaries
-- Chart rendering intentionally plots at most 250 rows; the preview displays at most 500.
-- Scatter is currently value-versus-record-order, not a two-variable scatter plot.
-- This is a manual checklist, not a claim that browser automation or assistive-technology testing has passed.
+## 4. Check accessibility and layout
+
+- [ ] Navigate controls with the keyboard and confirm focus remains visible.
+- [ ] Check that the file input, search field, and selection controls have usable labels.
+- [ ] Test a narrow viewport around 320 px and browser zoom at 200%.
+- [ ] Enable the operating system's reduced-motion preference and check the interface remains usable.
+
+## 5. Keep the limits in mind
+
+- Chart rendering is capped at 250 records; the table preview is capped at 500 rows.
+- The scatter-style chart plots a selected value against record order. It does not accept separate X and Y numeric fields yet.
+- These checks are manual. Do not describe the app as browser-tested or screen-reader-tested until those tests have been run and recorded.
